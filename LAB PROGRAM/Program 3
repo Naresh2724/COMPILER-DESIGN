@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{
+    char s[200];
+    int i;
+
+    printf("Enter a statement: ");
+    fgets(s, 200, stdin);
+
+    for(i = 0; s[i] != '\0'; i++)
+    {
+        /* Ignore comment */
+        if(s[i] == '/' && s[i+1] == '/')
+            break;
+
+        /* Ignore spaces, tabs and new lines */
+        if(s[i] != ' ' && s[i] != '\t' && s[i] != '\n')
+            printf("%c", s[i]);
+    }
+
+    return 0;
+}
