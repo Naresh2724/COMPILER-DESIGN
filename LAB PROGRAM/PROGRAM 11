@@ -1,0 +1,58 @@
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char name[10][20], search[20];
+    int i, n, choice, found;
+
+    while(1)
+    {
+        printf("\n1.Insert\n2.Display\n3.Search\n4.Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Enter symbol: ");
+                scanf("%s", name[n]);
+                n++;
+                printf("Inserted successfully\n");
+                break;
+
+            case 2:
+                printf("Symbol Table:\n");
+                for(i = 0; i < n; i++)
+                    printf("%s\n", name[i]);
+                break;
+
+            case 3:
+                printf("Enter symbol to search: ");
+                scanf("%s", search);
+                found = 0;
+
+                for(i = 0; i < n; i++)
+                {
+                    if(strcmp(name[i], search) == 0)
+                    {
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if(found)
+                    printf("Symbol found\n");
+                else
+                    printf("Symbol not found\n");
+                break;
+
+            case 4:
+                return 0;
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+}
