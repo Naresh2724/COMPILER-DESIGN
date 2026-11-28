@@ -1,0 +1,77 @@
+lex
+
+%{
+#include <stdio.h>
+
+int comment_lines = 0;
+FILE *out;
+%}
+
+%option noyywrap
+
+%x COMMENT
+
+%%
+
+"/*" {
+    BEGIN(COMMENT);
+    comment_lines++;
+}
+
+<COMMENT>"*/" {
+    BEGIN(INITIAL);
+}
+
+<COMMENT>\n {
+    comment_lines++;
+}
+
+<COMMENT>. {
+}
+
+"//".* {
+    comment_lines++;
+}
+
+\n {
+    fprintf(out, "\n");
+}
+
+. {
+    fprintf(out, "%s", yytext);
+}
+
+%%
+
+int main()
+{
+    yyin = fopen("input.c", "r");
+    out = fopen("output.c", "w");
+
+    if (yyin == NULL || out == NULL)
+    {
+        printf("File cannot be opened\n");
+        return 1;
+    }
+
+    yylex();
+
+    printf("Number of comment lines = %d\n", comment_lines);
+
+    fclose(yyin);
+    fclose(out);
+
+    return 0;
+}
+c programme
+#include<stdio.h>
+int main()
+{
+    int a,b,c; /*variable declaration*/
+
+    printf("enter two numbers");
+    scanf("%d %d",&a,&b);
+    c=a+b;//adding two numbers
+    printf("sum is %d",c);
+    return 0;
+}
