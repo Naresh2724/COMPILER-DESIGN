@@ -1,0 +1,17 @@
+START
+
+READ sentence
+consonants = 0
+
+FOR each character in sentence
+    IF character is an alphabet
+        IF character is not 'a', 'e', 'i', 'o', 'u'
+           or 'A', 'E', 'I', 'O', 'U'
+            consonants = consonants + 1
+        END IF
+    END IF
+END FOR
+
+PRINT consonants
+
+STOP
