@@ -1,0 +1,41 @@
+
+%{
+#include <stdio.h>
+
+int positive = 0;
+int negative = 0;
+%}
+
+%option noyywrap
+
+%%
+
+-[0-9]+      {
+                  printf("Negative number: %s\n", yytext);
+                  negative++;
+              }
+
+[0-9]+       {
+                  if (atoi(yytext) > 0)
+                  {
+                      printf("Positive number: %s\n", yytext);
+                      positive++;
+                  }
+              }
+
+[ \t\n]+     { }
+
+.             { }
+
+%%
+
+int main()
+{
+    printf("Enter numbers:\n");
+    yylex();
+
+    printf("\nPositive count = %d\n", positive);
+    printf("Negative count = %d\n", negative);
+
+    return 0;
+}
