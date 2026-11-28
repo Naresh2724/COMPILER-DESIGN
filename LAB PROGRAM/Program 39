@@ -1,0 +1,48 @@
+
+%{
+#include <stdio.h>
+#include <string.h>
+
+char oldword[50];
+char newword[50];
+%}
+
+%option noyywrap
+
+%%
+
+[a-zA-Z]+ {
+    if (strcmp(yytext, oldword) == 0)
+        printf("%s", newword);
+    else
+        printf("%s", yytext);
+}
+
+.|\n {
+    printf("%s", yytext);
+}
+
+%%
+
+int main()
+{
+    printf("Enter the word to replace: ");
+    scanf("%49s", oldword);
+
+    printf("Enter the new word: ");
+    scanf("%49s", newword);
+
+    yyin = fopen("input.txt", "r");
+
+    if (yyin == NULL)
+    {
+        printf("File cannot be opened\n");
+        return 1;
+    }
+
+    yylex();
+
+    fclose(yyin);
+
+    return 0;
+}
