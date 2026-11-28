@@ -1,0 +1,43 @@
+
+%{
+#include <stdio.h>
+%}
+
+%option noyywrap
+
+%%
+
+[0-9]+ {
+    printf("Number: %s\n", yytext);
+}
+
+"+" {
+    printf("Addition operator\n");
+}
+
+"-" {
+    printf("Subtraction operator\n");
+}
+
+"*" {
+    printf("Multiplication operator\n");
+}
+
+"/" {
+    printf("Division operator\n");
+}
+
+[ \t\n]+ { }
+
+. {
+    printf("Invalid input\n");
+}
+
+%%
+
+int main()
+{
+    printf("Enter a mathematical expression:\n");
+    yylex();
+    return 0;
+}
