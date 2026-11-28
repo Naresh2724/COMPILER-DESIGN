@@ -1,0 +1,84 @@
+lex
+%{
+#include <stdio.h>
+
+int characters = 0;
+int words = 0;
+int lines = 0;
+%}
+
+%option noyywrap
+
+%x COMMENT
+
+%%
+
+"/*"                    { BEGIN(COMMENT); }
+
+<COMMENT>"*/"            { BEGIN(INITIAL); }
+<COMMENT>\n             { lines++; }
+<COMMENT>.               { }
+
+"//".*                  { }
+
+[ \t]+                  { }
+
+\n                      { lines++; }
+
+\"([^\\\"]|\\.)*\"       {
+                            characters += yyleng;
+                            words++;
+                        }
+
+\'([^\\\']|\\.)*\'       {
+                            characters += yyleng;
+                            words++;
+                        }
+
+[a-zA-Z_][a-zA-Z0-9_]*  {
+                            characters += yyleng;
+                            words++;
+                        }
+
+[0-9]+                  {
+                            characters += yyleng;
+                            words++;
+                        }
+
+.                       {
+                            characters += yyleng;
+                            words++;
+                        }
+
+%%
+
+int main()
+{
+    yyin = fopen("sample.c", "r");
+
+    if (yyin == NULL)
+    {
+        printf("File cannot be opened\n");
+        return 1;
+    }
+C
+#include <stdio.h>
+int main()
+{
+    int number1, number2, sum;
+    printf("Enter two integers: ");
+    scanf("%d %d", &number1, &number2);
+    sum = number1 + number2;
+    printf("%d + %d = %d", number1, number2, sum);
+    return 0;
+}
+    yylex();
+
+    printf("Characters = %d\n", characters);
+    printf("Words = %d\n", words);
+    printf("Lines = %d\n", lines);
+
+    fclose(yyin);
+
+    return 0;
+}
