@@ -1,0 +1,15 @@
+START
+
+READ sentence
+vowels = 0
+
+FOR each character in sentence
+    IF character is 'a' or 'e' or 'i' or 'o' or 'u'
+       or 'A' or 'E' or 'I' or 'O' or 'U'
+        vowels = vowels + 1
+    END IF
+END FOR
+
+PRINT vowels
+
+STOP
