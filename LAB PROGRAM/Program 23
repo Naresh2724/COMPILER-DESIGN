@@ -1,0 +1,42 @@
+lex
+%{
+#include <stdio.h>
+
+int line = 1;
+%}
+
+%option noyywrap
+
+%%
+
+\n      {
+            printf("\n");
+            line++;
+            printf("%d: ", line);
+        }
+
+.       {
+            printf("%s", yytext);
+        }
+
+%%
+
+int main()
+{
+    yyin = fopen("sample.c", "r");
+
+    if (yyin == NULL)
+    {
+        printf("File cannot be opened\n");
+        return 1;
+    }
+
+    printf("%d: ", line);
+
+    yylex();
+
+    fclose(yyin);
+
+    return 0;
+}
+
