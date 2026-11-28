@@ -1,0 +1,25 @@
+
+%{
+#include <stdio.h>
+%}
+
+%option noyywrap
+
+%%
+
+https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/[a-zA-Z0-9._~:/?#\[\]@!$&'()*+,;=%-]*)? {
+    printf("Valid URL\n");
+}
+
+.+ {
+    printf("Invalid URL\n");
+}
+
+%%
+
+int main()
+{
+    printf("Enter URL:\n");
+    yylex();
+    return 0;
+}
