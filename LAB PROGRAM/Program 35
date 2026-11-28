@@ -1,0 +1,21 @@
+
+%{
+#include <stdio.h>
+%}
+
+%option noyywrap
+
+%%
+
+[0-9]    { printf("Given input is a digit\n"); }
+
+.|\n     { printf("Given input is not a digit\n"); }
+
+%%
+
+int main()
+{
+    printf("Enter a character:\n");
+    yylex();
+    return 0;
+}
